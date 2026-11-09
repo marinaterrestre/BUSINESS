@@ -153,7 +153,9 @@ footer a:hover{border-color:var(--red)}
           </div>
           <label><span data-i="message">Message</span><textarea name="message" required></textarea></label>
           <p class="note" data-i="hours">Events run from 6 PM to 2 AM.</p>
+          <input name="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0">
           <button class="send" type="submit" data-i="send1">Send inquiry</button>
+          <p class="note status" role="status" aria-live="polite"></p>
         </form>
 
         <!-- [PENDING] reservation mechanism not defined (email only for now). Fields below are a placeholder set. -->
@@ -200,13 +202,13 @@ let curTab='event', lang='en';
 const I={
  en:{top:'Inquire',sub:'Inflight Bar · Private lounge',exclusive:'Business is a private lounge: when you reserve it, no one else is there.',cta1:'Inquire for an event',cta2:'Immediate reservation',
   hours:'Events run from 6 PM to 2 AM.',name:'Name',booking:'Booking under the name of',eventdate:'Event date',people:'Number of people',email:'Email',message:'Message',date:'Date',time:'Time',guests:'Guests',
-  send1:'Send inquiry',send2:'Reserve · $500 deposit',deposit:'<b>A $500 USD deposit holds your date on the Business calendar.</b>',
+  send1:'Send inquiry',sending:'Sending…',sent:'Thank you. We received your inquiry and sent a confirmation to your email.',err:'Something went wrong. Please try again or write to business@businessfirst.art.',send2:'Reserve · $500 deposit',deposit:'<b>A $500 USD deposit holds your date on the Business calendar.</b>',
   write:'Or write to',close:'It’s a pleasure doing<br><em>Business</em> with you',
   t_event:'Inquire for<br>an <b>event</b>',t_reserve:'Immediate<br><b>reservation</b>'},
  // [REVIEW] Spanish copy is a translation, not provided by the client.
  es:{top:'Consultar',sub:'Inflight Bar · Lounge privado',exclusive:'Business es un lounge privado: si lo reservas, no hay nadie más.',cta1:'Consultar por un evento',cta2:'Reservación inmediata',
   hours:'Los eventos son de 6 PM a 2 AM.',name:'Nombre',booking:'A nombre de',eventdate:'Fecha del evento',people:'Número de personas',email:'Correo',message:'Mensaje',date:'Fecha',time:'Hora',guests:'Invitados',
-  send1:'Enviar consulta',send2:'Reservar · depósito de $500',deposit:'<b>Un depósito de $500 USD aparta tu fecha en el calendario de Business.</b>',
+  send1:'Enviar consulta',sending:'Enviando…',sent:'Gracias. Recibimos tu consulta y te enviamos una confirmación a tu correo.',err:'Algo salió mal. Inténtalo de nuevo o escribe a business@businessfirst.art.',send2:'Reservar · depósito de $500',deposit:'<b>Un depósito de $500 USD aparta tu fecha en el calendario de Business.</b>',
   write:'O escribe a',close:'Es un placer hacer<br><em>Business</em> contigo',
   t_event:'Consulta por<br>un <b>evento</b>',t_reserve:'Reservación<br><b>inmediata</b>'}
 };
@@ -230,14 +232,29 @@ document.querySelectorAll('[data-tab]').forEach(el=>el.addEventListener('click',
 let saved=null; try{saved=localStorage.getItem('lang')}catch(e){}
 setLang(saved||((navigator.language||'en').toLowerCase().startsWith('es')?'es':'en'));
 
-// Forms: open the visitor's email app addressed to business@businessfirst.art.
-// [PENDING] swap for a real form endpoint once hosting is chosen.
-document.querySelectorAll('form').forEach(f=>f.addEventListener('submit',e=>{
+// Event inquiry: sent from the page (emails Business + automatic confirmation to the visitor).
+const evForm=document.getElementById('event');
+evForm.addEventListener('submit',async e=>{
   e.preventDefault();
-  const d=new FormData(f), kind=f.dataset.kind;
+  const btn=evForm.querySelector('.send'), st=evForm.querySelector('.status');
+  btn.disabled=true; st.textContent=I[lang].sending;
+  try{
+    const r=await fetch('/api/inquire',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...Object.fromEntries(new FormData(evForm)),lang})});
+    if(!r.ok) throw 0;
+    evForm.reset(); st.textContent=I[lang].sent;
+  }catch(_){ st.textContent=I[lang].err; }
+  btn.disabled=false;
+});
+
+// Reservation: still opens the visitor's email app until the deposit payment is connected.
+// [PENDING] replace with the pey payment flow.
+const rvForm=document.getElementById('reserve');
+rvForm.addEventListener('submit',e=>{
+  e.preventDefault();
+  const d=new FormData(rvForm), kind=rvForm.dataset.kind;
   const body=[...d.entries()].map(([k,v])=>{k=k.replace(/_/g,' ');return k[0].toUpperCase()+k.slice(1)+': '+v}).join('\n');
   location.href='mailto:business@businessfirst.art?subject='+encodeURIComponent(kind+' — '+d.get('name'))+'&body='+encodeURIComponent(body);
-}));
+});
 </script>
 </body>
 </html>
