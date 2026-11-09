@@ -7,13 +7,14 @@
 <meta name="description" content="Business, Inflight Bar. Inquire for an event or make an immediate reservation.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,700;1,300;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,700;1,300;1,700&family=Playfair+Display:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
 <style>
 :root{
   --red:#EE3725;      /* logo red, from Figma */
   --pink:#FFA3A2;     /* cover background, from Figma */
   --ink:#fff;
   --bg:#14061a;
+  --display:"Playfair Display","Bodoni MT",Didot,Georgia,serif; /* stand-in for Marlfield LT */
   --sans:Inter,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 *{box-sizing:border-box;margin:0}
@@ -37,7 +38,7 @@ img{display:block;max-width:100%}
 .top a.link:hover{border-color:var(--ink)}
 .hero-in{bottom:clamp(28px,5vw,64px);display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
 .tag{font-weight:300;font-size:clamp(36px,7vw,104px);line-height:1;letter-spacing:-.025em}
-.tag em{font-weight:700;font-style:italic}
+.tag em{font-family:var(--display);font-weight:900;font-style:italic;letter-spacing:-.01em}
 .sub{display:block;margin-top:20px;font-size:12px;letter-spacing:.4em;text-transform:uppercase}
 .cta{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);text-decoration:none;border:1px solid var(--ink);padding:16px 26px;border-radius:999px;transition:.25s;white-space:nowrap}
 .ctas{display:flex;gap:12px;flex-wrap:wrap}
@@ -57,7 +58,7 @@ img{display:block;max-width:100%}
 .inquire-in{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,96px)}
 @media(max-width:800px){.inquire-in{grid-template-columns:1fr}.two.three{grid-template-columns:1fr}}
 h2{font-weight:300;font-size:clamp(44px,6.5vw,92px);line-height:.98;letter-spacing:-.03em}
-h2 b{font-weight:700}
+h2 b{font-family:var(--display);font-weight:900;letter-spacing:-.01em}
 .tabs{display:flex;max-width:100%;border:1.5px solid var(--red);border-radius:999px;margin-bottom:28px;padding:3px}
 .tabs button{flex:1;font:inherit;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);background:transparent;border:0;padding:12px 10px;border-radius:999px;cursor:pointer}
 .tabs button[aria-selected=true]{background:var(--red);color:#fff}
