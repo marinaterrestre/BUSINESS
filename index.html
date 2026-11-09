@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business — Inflight Bar</title>
+<meta name="description" content="Business, Inflight Bar. Inquire for a private event.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#14061a; --bg2:#1d0a22; --ink:#f4e9df; --dim:#b9a3a8;
+  --red:#d9261c; --brass:#c9a35b; --line:rgba(244,233,223,.18);
+  --serif:"Instrument Serif",Georgia,serif; --sans:Inter,system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+
+/* hero */
+.hero{position:relative;height:100svh;min-height:560px;overflow:hidden}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,6,26,.35) 0%,rgba(20,6,26,0) 35%,rgba(20,6,26,.85) 100%)}
+.hero-in{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:0 clamp(20px,4vw,56px) clamp(28px,5vw,56px);display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(72px,17vw,240px);line-height:.85;letter-spacing:-.02em}
+.sub{display:block;margin-top:18px;font-size:clamp(11px,1.2vw,14px);letter-spacing:.42em;text-transform:uppercase;color:var(--brass)}
+.cta{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);text-decoration:none;border:1px solid var(--ink);padding:16px 26px;border-radius:999px;transition:.25s;white-space:nowrap}
+.cta:hover{background:var(--ink);color:var(--bg)}
+
+/* gallery: justified rows, no cropping */
+.gallery{padding:clamp(8px,1.2vw,16px)}
+.row{display:flex;gap:clamp(8px,1.2vw,16px);margin-bottom:clamp(8px,1.2vw,16px)}
+.row button{flex:var(--a) 1 0;min-width:0;border:0;padding:0;background:var(--bg2);cursor:zoom-in;overflow:hidden}
+.row img{width:100%;height:100%;object-fit:cover;aspect-ratio:var(--a);transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.row button:hover img{transform:scale(1.03)}
+@media(max-width:700px){.row{flex-direction:column}.row button{flex:none}}
+
+/* inquire */
+.inquire{padding:clamp(72px,12vw,160px) clamp(20px,4vw,56px);background:var(--bg2);border-top:1px solid var(--line)}
+.inquire-in{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,96px)}
+@media(max-width:800px){.inquire-in{grid-template-columns:1fr}}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(44px,6.5vw,88px);line-height:.95}
+h2 em{color:var(--red)}
+form{display:grid;gap:22px;align-content:start}
+label{display:grid;gap:8px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
+input,textarea{font:inherit;font-size:17px;letter-spacing:0;text-transform:none;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--line);padding:10px 0;border-radius:0;outline:0;transition:border-color .2s}
+textarea{resize:vertical;min-height:120px}
+input:focus,textarea:focus{border-bottom-color:var(--brass)}
+button.send{justify-self:start;font:inherit;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--bg);background:var(--ink);border:0;padding:16px 30px;border-radius:999px;cursor:pointer;transition:.25s}
+button.send:hover{background:var(--red);color:var(--ink)}
+.note{font-size:14px;color:var(--dim)}
+
+footer{padding:28px clamp(20px,4vw,56px);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--dim);border-top:1px solid var(--line)}
+footer a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+footer a:hover{border-color:var(--brass)}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:50;background:rgba(10,3,14,.96);display:none;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+.lb.on{display:flex}
+.lb img{max-height:94vh;max-width:96vw;object-fit:contain}
+.lb span{position:fixed;top:18px;right:24px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <img src="img/business_2.jpg" alt="Curved red banquette beneath airplane cabin windows at Business">
+  <div class="hero-in">
+    <div>
+      <h1>Business</h1>
+      <span class="sub">Inflight Bar</span>
+    </div>
+    <a class="cta" href="#inquire">Inquire for a private event</a>
+  </div>
+</header>
+
+<main>
+  <section class="gallery" aria-label="Photos of Business">
+    <div class="row">
+      <button style="--a:1.5" data-full="img/business_1.jpg"><img src="img/business_1.jpg" alt="Red banquette and marble table under cabin windows" loading="lazy"></button>
+    </div>
+    <div class="row">
+      <button style="--a:.667" data-full="img/business_7.jpg"><img src="img/thumb/Business_7.jpg" alt="Purple-carpeted stairs lined with orange light" loading="lazy"></button>
+      <button style="--a:1.5" data-full="img/business_4.jpg"><img src="img/thumb/Business_4.jpg" alt="Circular banquette seen from above" loading="lazy"></button>
+      <button style="--a:.667" data-full="img/business_8.jpg"><img src="img/thumb/Business_8.jpg" alt="Stairwell leading to a door with a porthole window" loading="lazy"></button>
+    </div>
+    <div class="row">
+      <button style="--a:1.5" data-full="img/business_3.jpg"><img src="img/thumb/Business_3.jpg" alt="Wood-paneled lounge with velvet curtains" loading="lazy"></button>
+      <button style="--a:1.5" data-full="img/business_5.jpg"><img src="img/thumb/Business_5.jpg" alt="Two martini glasses on a marble table" loading="lazy"></button>
+    </div>
+  </section>
+
+  <section class="inquire" id="inquire">
+    <div class="inquire-in">
+      <h2>Inquire for a<br><em>private event</em></h2>
+      <form id="f">
+        <label>Name<input name="name" required autocomplete="name"></label>
+        <label>Email<input name="email" type="email" required autocomplete="email"></label>
+        <label>Message<textarea name="message" required></textarea></label>
+        <button class="send" type="submit">Send inquiry</button>
+        <p class="note">Or write to <a href="mailto:business@inflightbar.com" style="color:var(--ink)">business@inflightbar.com</a></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>Business — Inflight Bar</span>
+  <a href="mailto:business@inflightbar.com">business@inflightbar.com</a>
+</footer>
+
+<!-- [PENDING] address, hours, Instagram: not provided, intentionally not rendered -->
+
+<div class="lb" id="lb" role="dialog" aria-label="Photo"><span>Close</span><img alt=""></div>
+
+<script>
+// Lightbox
+const lb=document.getElementById('lb'), lbi=lb.querySelector('img');
+document.querySelectorAll('[data-full]').forEach(b=>b.addEventListener('click',()=>{
+  lbi.src=b.dataset.full; lbi.alt=b.querySelector('img').alt; lb.classList.add('on');
+}));
+lb.addEventListener('click',()=>lb.classList.remove('on'));
+addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('on')});
+
+// Form: opens the visitor's email app addressed to business@inflightbar.com.
+// [PENDING] swap for a real form endpoint once hosting is chosen.
+document.getElementById('f').addEventListener('submit',e=>{
+  e.preventDefault();
+  const d=new FormData(e.target);
+  const body=`Name: ${d.get('name')}\nEmail: ${d.get('email')}\n\n${d.get('message')}`;
+  location.href='mailto:business@inflightbar.com?subject='+encodeURIComponent('Private event inquiry — '+d.get('name'))+'&body='+encodeURIComponent(body);
+});
+</script>
+</body>
+</html>
