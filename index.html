@@ -62,6 +62,8 @@ h2 b{font-family:var(--display);font-weight:900;letter-spacing:-.01em}
 .tabs{display:flex;max-width:100%;border:1.5px solid var(--red);border-radius:999px;margin-bottom:28px;padding:3px}
 .tabs button{flex:1;font:inherit;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);background:transparent;border:0;padding:12px 10px;border-radius:999px;cursor:pointer}
 .tabs button[aria-selected=true]{background:var(--red);color:#fff}
+.inquire-in>*,.two>*,form,label{min-width:0}
+input,textarea{width:100%;min-width:0}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 .two.three{grid-template-columns:1fr 1fr 1fr}
 form[hidden]{display:none}
@@ -142,6 +144,11 @@ footer a:hover{border-color:var(--red)}
         <form id="event" data-kind="Event inquiry">
           <label><span data-i="name">Name</span><input name="name" required autocomplete="name"></label>
           <label><span data-i="email">Email</span><input name="email" type="email" required autocomplete="email"></label>
+          <label><span data-i="booking">Booking under the name of</span><input name="booking_name" required></label>
+          <div class="two">
+            <label><span data-i="eventdate">Event date</span><input name="event_date" type="date" required></label>
+            <label><span data-i="people">Number of people</span><input name="number_of_people" type="number" min="1" required></label>
+          </div>
           <label><span data-i="message">Message</span><textarea name="message" required></textarea></label>
           <button class="send" type="submit" data-i="send1">Send inquiry</button>
         </form>
@@ -188,13 +195,13 @@ addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('on')});
 let curTab='event', lang='en';
 const I={
  en:{top:'Inquire',sub:'Inflight Bar · Private lounge',exclusive:'Business is a private lounge: when you reserve it, no one else is there.',cta1:'Inquire for an event',cta2:'Immediate reservation',
-  name:'Name',email:'Email',message:'Message',date:'Date',time:'Time',guests:'Guests',
+  name:'Name',booking:'Booking under the name of',eventdate:'Event date',people:'Number of people',email:'Email',message:'Message',date:'Date',time:'Time',guests:'Guests',
   send1:'Send inquiry',send2:'Reserve · $500 deposit',deposit:'<b>A $500 USD deposit holds your date on the Business calendar.</b>',
   write:'Or write to',close:'It’s a pleasure doing<br><em>Business</em> with you',
   t_event:'Inquire for<br>an <b>event</b>',t_reserve:'Immediate<br><b>reservation</b>'},
  // [REVIEW] Spanish copy is a translation, not provided by the client.
  es:{top:'Consultar',sub:'Inflight Bar · Lounge privado',exclusive:'Business es un lounge privado: si lo reservas, no hay nadie más.',cta1:'Consultar por un evento',cta2:'Reservación inmediata',
-  name:'Nombre',email:'Correo',message:'Mensaje',date:'Fecha',time:'Hora',guests:'Invitados',
+  name:'Nombre',booking:'A nombre de',eventdate:'Fecha del evento',people:'Número de personas',email:'Correo',message:'Mensaje',date:'Fecha',time:'Hora',guests:'Invitados',
   send1:'Enviar consulta',send2:'Reservar · depósito de $500',deposit:'<b>Un depósito de $500 USD aparta tu fecha en el calendario de Business.</b>',
   write:'O escribe a',close:'Es un placer hacer<br><em>Business</em> contigo',
   t_event:'Consulta por<br>un <b>evento</b>',t_reserve:'Reservación<br><b>inmediata</b>'}
@@ -224,7 +231,7 @@ setLang(saved||((navigator.language||'en').toLowerCase().startsWith('es')?'es':'
 document.querySelectorAll('form').forEach(f=>f.addEventListener('submit',e=>{
   e.preventDefault();
   const d=new FormData(f), kind=f.dataset.kind;
-  const body=[...d.entries()].map(([k,v])=>k[0].toUpperCase()+k.slice(1)+': '+v).join('\n');
+  const body=[...d.entries()].map(([k,v])=>{k=k.replace(/_/g,' ');return k[0].toUpperCase()+k.slice(1)+': '+v}).join('\n');
   location.href='mailto:business@inflightbar.com?subject='+encodeURIComponent(kind+' — '+d.get('name'))+'&body='+encodeURIComponent(body);
 }));
 </script>
