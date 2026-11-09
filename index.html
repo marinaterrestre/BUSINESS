@@ -171,7 +171,7 @@ footer a:hover{border-color:var(--red)}
           <button class="send" type="submit" data-i="send2">Reserve · $500 deposit</button>
         </form>
 
-        <p class="note" style="margin-top:22px"><span data-i="write">Or write to</span> <a href="mailto:business@inflightbar.com">business@inflightbar.com</a></p>
+        <p class="note" style="margin-top:22px"><span data-i="write">Or write to</span> <a href="mailto:business@businessfirst.art">business@businessfirst.art</a></p>
       </div>
     </div>
   </section>
@@ -179,7 +179,7 @@ footer a:hover{border-color:var(--red)}
 
 <footer>
   <img class="logo" src="img/logo-white.svg" alt="Business">
-  <a href="mailto:business@inflightbar.com">business@inflightbar.com</a>
+  <a href="mailto:business@businessfirst.art">business@businessfirst.art</a>
 </footer>
 
 <!-- [PENDING] address, hours, Instagram: not confirmed for the site, intentionally not rendered -->
@@ -229,13 +229,13 @@ document.querySelectorAll('[data-tab]').forEach(el=>el.addEventListener('click',
 let saved=null; try{saved=localStorage.getItem('lang')}catch(e){}
 setLang(saved||((navigator.language||'en').toLowerCase().startsWith('es')?'es':'en'));
 
-// Forms: open the visitor's email app addressed to business@inflightbar.com.
+// Forms: open the visitor's email app addressed to business@businessfirst.art.
 // [PENDING] swap for a real form endpoint once hosting is chosen.
 document.querySelectorAll('form').forEach(f=>f.addEventListener('submit',e=>{
   e.preventDefault();
   const d=new FormData(f), kind=f.dataset.kind;
   const body=[...d.entries()].map(([k,v])=>{k=k.replace(/_/g,' ');return k[0].toUpperCase()+k.slice(1)+': '+v}).join('\n');
-  location.href='mailto:business@inflightbar.com?subject='+encodeURIComponent(kind+' — '+d.get('name'))+'&body='+encodeURIComponent(body);
+  location.href='mailto:business@businessfirst.art?subject='+encodeURIComponent(kind+' — '+d.get('name'))+'&body='+encodeURIComponent(body);
 }));
 </script>
 </body>
