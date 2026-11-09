@@ -65,7 +65,7 @@ module.exports = async (req, res) => {
     number_of_people: String(b.number_of_people || '').trim().slice(0, 10),
     message: String(b.message || '').trim().slice(0, 4000)
   };
-  if (!d.name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email) || !d.booking_name || !d.event_date || !d.number_of_people || !d.message) {
+  if (!d.name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email) || !d.booking_name || !d.event_date || !(+d.number_of_people >= 1 && +d.number_of_people <= 42) || !d.message) {
     return res.status(400).json({ok:false, error:'invalid'});
   }
   try {
