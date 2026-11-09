@@ -105,7 +105,7 @@ footer a:hover{border-color:var(--red)}
   <div class="hero-in">
     <div>
       <p class="tag" data-i="tag" data-html>Pleased to do<br><b>business first</b></p>
-      <span class="sub">Inflight Bar</span>
+      <span class="sub" data-i="sub">Inflight Bar · Private lounge</span>
     </div>
     <div class="ctas">
       <a class="cta" href="#inquire" data-tab="event" data-i="cta1">Inquire for an event</a>
@@ -157,6 +157,7 @@ footer a:hover{border-color:var(--red)}
             <label><span data-i="time">Time</span><input name="time" type="time" required></label>
             <label><span data-i="guests">Guests</span><input name="guests" type="number" min="1" required></label>
           </div>
+          <p class="note" data-i="exclusive">Business is a private lounge: when you reserve it, no one else is there.</p>
           <p class="note" data-i="deposit" data-html><b>A $500 USD deposit holds your date on the Business calendar.</b></p>
           <!-- [PENDING] payment (deposit) and live calendar availability are not connected yet; this form currently sends the request by email. -->
           <button class="send" type="submit" data-i="send2">Reserve · $500 deposit</button>
@@ -191,13 +192,13 @@ addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('on')});
 // Tabs
 let curTab='event', lang='en';
 const I={
- en:{top:'Inquire',tag:'Pleased to do<br><b>business first</b>',cta1:'Inquire for an event',cta2:'Immediate reservation',
+ en:{top:'Inquire',sub:'Inflight Bar · Private lounge',exclusive:'Business is a private lounge: when you reserve it, no one else is there.',tag:'Pleased to do<br><b>business first</b>',cta1:'Inquire for an event',cta2:'Immediate reservation',
   name:'Name',email:'Email',message:'Message',date:'Date',time:'Time',guests:'Guests',
   send1:'Send inquiry',send2:'Reserve · $500 deposit',deposit:'<b>A $500 USD deposit holds your date on the Business calendar.</b>',
   write:'Or write to',close:'It’s a pleasure doing <em>Business</em> with you',
   t_event:'Inquire for<br>an <b>event</b>',t_reserve:'Immediate<br><b>reservation</b>'},
  // [REVIEW] Spanish copy is a translation, not provided by the client.
- es:{top:'Consultar',tag:'Un gusto hacer<br><b>business first</b>',cta1:'Consultar por un evento',cta2:'Reservación inmediata',
+ es:{top:'Consultar',sub:'Inflight Bar · Lounge privado',exclusive:'Business es un lounge privado: si lo reservas, no hay nadie más.',tag:'Un gusto hacer<br><b>business first</b>',cta1:'Consultar por un evento',cta2:'Reservación inmediata',
   name:'Nombre',email:'Correo',message:'Mensaje',date:'Fecha',time:'Hora',guests:'Invitados',
   send1:'Enviar consulta',send2:'Reservar · depósito de $500',deposit:'<b>Un depósito de $500 USD aparta tu fecha en el calendario de Business.</b>',
   write:'O escribe a',close:'Es un placer hacer <em>Business</em> contigo',
