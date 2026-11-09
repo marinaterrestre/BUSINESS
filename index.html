@@ -29,6 +29,10 @@ img{display:block;max-width:100%}
 .top,.hero-in{position:absolute;z-index:2;left:0;right:0;padding:0 clamp(20px,4vw,56px)}
 .top{top:clamp(20px,3vw,40px);display:flex;justify-content:space-between;align-items:center}
 .logo{width:clamp(200px,28vw,420px);height:auto}
+.right{display:flex;align-items:center;gap:28px}
+.lang{display:flex;gap:8px;align-items:center;font-size:13px;letter-spacing:.16em}
+.lang button{font:inherit;color:var(--ink);background:none;border:0;border-bottom:1px solid transparent;padding:4px 2px;cursor:pointer;opacity:.55;letter-spacing:inherit}
+.lang button[aria-pressed=true]{opacity:1;border-bottom-color:var(--ink)}
 .top a.link{color:var(--ink);text-decoration:none;font-size:13px;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid transparent}
 .top a.link:hover{border-color:var(--ink)}
 .hero-in{bottom:clamp(28px,5vw,64px);display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
@@ -93,16 +97,19 @@ footer a:hover{border-color:var(--red)}
   <h1 class="sr">Business — Inflight Bar</h1>
   <div class="top">
     <img class="logo" src="img/logo-white.svg" alt="Business">
-    <a class="link" href="#inquire">Inquire</a>
+    <div class="right">
+      <a class="link" href="#inquire" data-i="top">Inquire</a>
+      <div class="lang" role="group" aria-label="Language"><button data-lang="en" aria-pressed="true">EN</button><span>/</span><button data-lang="es" aria-pressed="false">ES</button></div>
+    </div>
   </div>
   <div class="hero-in">
     <div>
-      <p class="tag">Pleased to do<br><b>business first</b></p>
+      <p class="tag" data-i="tag" data-html>Pleased to do<br><b>business first</b></p>
       <span class="sub">Inflight Bar</span>
     </div>
     <div class="ctas">
-      <a class="cta" href="#inquire" data-tab="event">Inquire for an event</a>
-      <a class="cta solid" href="#inquire" data-tab="reserve">Immediate reservation</a>
+      <a class="cta" href="#inquire" data-tab="event" data-i="cta1">Inquire for an event</a>
+      <a class="cta solid" href="#inquire" data-tab="reserve" data-i="cta2">Immediate reservation</a>
     </div>
   </div>
 </header>
@@ -130,37 +137,37 @@ footer a:hover{border-color:var(--red)}
       </div>
       <div>
         <div class="tabs" role="tablist">
-          <button role="tab" data-tab="event" aria-selected="true">Inquire for an event</button>
-          <button role="tab" data-tab="reserve" aria-selected="false">Immediate reservation</button>
+          <button role="tab" data-tab="event" aria-selected="true" data-i="cta1">Inquire for an event</button>
+          <button role="tab" data-tab="reserve" aria-selected="false" data-i="cta2">Immediate reservation</button>
         </div>
 
         <form id="event" data-kind="Event inquiry">
-          <label>Name<input name="name" required autocomplete="name"></label>
-          <label>Email<input name="email" type="email" required autocomplete="email"></label>
-          <label>Message<textarea name="message" required></textarea></label>
-          <button class="send" type="submit">Send inquiry</button>
+          <label><span data-i="name">Name</span><input name="name" required autocomplete="name"></label>
+          <label><span data-i="email">Email</span><input name="email" type="email" required autocomplete="email"></label>
+          <label><span data-i="message">Message</span><textarea name="message" required></textarea></label>
+          <button class="send" type="submit" data-i="send1">Send inquiry</button>
         </form>
 
         <!-- [PENDING] reservation mechanism not defined (email only for now). Fields below are a placeholder set. -->
         <form id="reserve" data-kind="Immediate reservation" hidden>
-          <label>Name<input name="name" required autocomplete="name"></label>
-          <label>Email<input name="email" type="email" required autocomplete="email"></label>
+          <label><span data-i="name">Name</span><input name="name" required autocomplete="name"></label>
+          <label><span data-i="email">Email</span><input name="email" type="email" required autocomplete="email"></label>
           <div class="two three">
-            <label>Date<input name="date" type="date" required></label>
-            <label>Time<input name="time" type="time" required></label>
-            <label>Guests<input name="guests" type="number" min="1" required></label>
+            <label><span data-i="date">Date</span><input name="date" type="date" required></label>
+            <label><span data-i="time">Time</span><input name="time" type="time" required></label>
+            <label><span data-i="guests">Guests</span><input name="guests" type="number" min="1" required></label>
           </div>
-          <p class="note"><b>A $500 USD deposit holds your date on the Business calendar.</b></p>
+          <p class="note" data-i="deposit" data-html><b>A $500 USD deposit holds your date on the Business calendar.</b></p>
           <!-- [PENDING] payment (deposit) and live calendar availability are not connected yet; this form currently sends the request by email. -->
-          <button class="send" type="submit">Reserve · $500 deposit</button>
+          <button class="send" type="submit" data-i="send2">Reserve · $500 deposit</button>
         </form>
 
-        <p class="note" style="margin-top:22px">Or write to <a href="mailto:business@inflightbar.com">business@inflightbar.com</a></p>
+        <p class="note" style="margin-top:22px"><span data-i="write">Or write to</span> <a href="mailto:business@inflightbar.com">business@inflightbar.com</a></p>
       </div>
     </div>
   </section>
   <section class="close">
-    <p>It’s a pleasure doing <em>Business</em> with you</p>
+    <p data-i="close" data-html>It’s a pleasure doing <em>Business</em> with you</p>
   </section>
 </main>
 
@@ -182,14 +189,39 @@ lb.addEventListener('click',()=>lb.classList.remove('on'));
 addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('on')});
 
 // Tabs
-const titles={event:'Inquire for<br>an <b>event</b>',reserve:'Immediate<br><b>reservation</b>'};
+let curTab='event', lang='en';
+const I={
+ en:{top:'Inquire',tag:'Pleased to do<br><b>business first</b>',cta1:'Inquire for an event',cta2:'Immediate reservation',
+  name:'Name',email:'Email',message:'Message',date:'Date',time:'Time',guests:'Guests',
+  send1:'Send inquiry',send2:'Reserve · $500 deposit',deposit:'<b>A $500 USD deposit holds your date on the Business calendar.</b>',
+  write:'Or write to',close:'It’s a pleasure doing <em>Business</em> with you',
+  t_event:'Inquire for<br>an <b>event</b>',t_reserve:'Immediate<br><b>reservation</b>'},
+ // [REVIEW] Spanish copy is a translation, not provided by the client.
+ es:{top:'Consultar',tag:'Un gusto hacer<br><b>business first</b>',cta1:'Consultar por un evento',cta2:'Reservación inmediata',
+  name:'Nombre',email:'Correo',message:'Mensaje',date:'Fecha',time:'Hora',guests:'Invitados',
+  send1:'Enviar consulta',send2:'Reservar · depósito de $500',deposit:'<b>Un depósito de $500 USD aparta tu fecha en el calendario de Business.</b>',
+  write:'O escribe a',close:'Es un placer hacer <em>Business</em> contigo',
+  t_event:'Consulta por<br>un <b>evento</b>',t_reserve:'Reservación<br><b>inmediata</b>'}
+};
+function setLang(l){
+  lang=l; document.documentElement.lang=l;
+  document.querySelectorAll('[data-i]').forEach(el=>{const v=I[l][el.dataset.i]; if(v==null)return; if(el.hasAttribute('data-html'))el.innerHTML=v; else el.textContent=v});
+  document.querySelectorAll('[data-lang]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===l));
+  document.getElementById('title').innerHTML=I[l]['t_'+curTab];
+  try{localStorage.setItem('lang',l)}catch(e){}
+}
+document.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
 function tab(k){
+  curTab=k;
   document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===k));
   document.getElementById('event').hidden=k!=='event';
   document.getElementById('reserve').hidden=k!=='reserve';
-  document.getElementById('title').innerHTML=titles[k];
+  document.getElementById('title').innerHTML=I[lang]['t_'+k];
 }
 document.querySelectorAll('[data-tab]').forEach(el=>el.addEventListener('click',()=>tab(el.dataset.tab)));
+
+let saved=null; try{saved=localStorage.getItem('lang')}catch(e){}
+setLang(saved||((navigator.language||'en').toLowerCase().startsWith('es')?'es':'en'));
 
 // Forms: open the visitor's email app addressed to business@inflightbar.com.
 // [PENDING] swap for a real form endpoint once hosting is chosen.
