@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Business — Inflight Bar</title>
-<meta name="description" content="Business, Inflight Bar. Pleased to do business first. Inquire for an event or make an immediate reservation.">
+<meta name="description" content="Business, Inflight Bar. Inquire for an event or make an immediate reservation.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,700;1,300;1,700&display=swap" rel="stylesheet">
@@ -37,7 +37,7 @@ img{display:block;max-width:100%}
 .top a.link:hover{border-color:var(--ink)}
 .hero-in{bottom:clamp(28px,5vw,64px);display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
 .tag{font-weight:300;font-size:clamp(36px,7vw,104px);line-height:1;letter-spacing:-.025em}
-.tag b{font-weight:700}
+.tag em{font-weight:700;font-style:italic}
 .sub{display:block;margin-top:20px;font-size:12px;letter-spacing:.4em;text-transform:uppercase}
 .cta{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);text-decoration:none;border:1px solid var(--ink);padding:16px 26px;border-radius:999px;transition:.25s;white-space:nowrap}
 .ctas{display:flex;gap:12px;flex-wrap:wrap}
@@ -75,9 +75,6 @@ button.send:hover{background:#14061a}
 .note{font-size:14px}
 .note a{color:var(--red)}
 
-.close{padding:clamp(72px,12vw,160px) clamp(20px,4vw,56px);background:var(--bg)}
-.close p{max-width:1100px;margin:0 auto;font-weight:300;font-size:clamp(36px,6.5vw,92px);line-height:1;letter-spacing:-.03em}
-.close em{font-weight:700;color:var(--red)}
 footer{padding:clamp(24px,3vw,40px) clamp(20px,4vw,56px);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:13px;background:var(--bg)}
 footer .logo{width:150px}
 footer a{color:var(--ink);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.3)}
@@ -104,7 +101,7 @@ footer a:hover{border-color:var(--red)}
   </div>
   <div class="hero-in">
     <div>
-      <p class="tag" data-i="tag" data-html>Pleased to do<br><b>business first</b></p>
+      <p class="tag" data-i="close" data-html>It’s a pleasure doing<br><em>Business</em> with you</p>
       <span class="sub" data-i="sub">Inflight Bar · Private lounge</span>
     </div>
     <div class="ctas">
@@ -167,9 +164,6 @@ footer a:hover{border-color:var(--red)}
       </div>
     </div>
   </section>
-  <section class="close">
-    <p data-i="close" data-html>It’s a pleasure doing <em>Business</em> with you</p>
-  </section>
 </main>
 
 <footer>
@@ -192,16 +186,16 @@ addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('on')});
 // Tabs
 let curTab='event', lang='en';
 const I={
- en:{top:'Inquire',sub:'Inflight Bar · Private lounge',exclusive:'Business is a private lounge: when you reserve it, no one else is there.',tag:'Pleased to do<br><b>business first</b>',cta1:'Inquire for an event',cta2:'Immediate reservation',
+ en:{top:'Inquire',sub:'Inflight Bar · Private lounge',exclusive:'Business is a private lounge: when you reserve it, no one else is there.',cta1:'Inquire for an event',cta2:'Immediate reservation',
   name:'Name',email:'Email',message:'Message',date:'Date',time:'Time',guests:'Guests',
   send1:'Send inquiry',send2:'Reserve · $500 deposit',deposit:'<b>A $500 USD deposit holds your date on the Business calendar.</b>',
-  write:'Or write to',close:'It’s a pleasure doing <em>Business</em> with you',
+  write:'Or write to',close:'It’s a pleasure doing<br><em>Business</em> with you',
   t_event:'Inquire for<br>an <b>event</b>',t_reserve:'Immediate<br><b>reservation</b>'},
  // [REVIEW] Spanish copy is a translation, not provided by the client.
- es:{top:'Consultar',sub:'Inflight Bar · Lounge privado',exclusive:'Business es un lounge privado: si lo reservas, no hay nadie más.',tag:'Un gusto hacer<br><b>business first</b>',cta1:'Consultar por un evento',cta2:'Reservación inmediata',
+ es:{top:'Consultar',sub:'Inflight Bar · Lounge privado',exclusive:'Business es un lounge privado: si lo reservas, no hay nadie más.',cta1:'Consultar por un evento',cta2:'Reservación inmediata',
   name:'Nombre',email:'Correo',message:'Mensaje',date:'Fecha',time:'Hora',guests:'Invitados',
   send1:'Enviar consulta',send2:'Reservar · depósito de $500',deposit:'<b>Un depósito de $500 USD aparta tu fecha en el calendario de Business.</b>',
-  write:'O escribe a',close:'Es un placer hacer <em>Business</em> contigo',
+  write:'O escribe a',close:'Es un placer hacer<br><em>Business</em> contigo',
   t_event:'Consulta por<br>un <b>evento</b>',t_reserve:'Reservación<br><b>inmediata</b>'}
 };
 function setLang(l){
