@@ -37,6 +37,7 @@ img{display:block;max-width:100%}
 .top a.link:hover{border-color:var(--ink)}
 .hero-in{bottom:clamp(28px,5vw,64px);display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
 .tag{font-weight:300;font-size:clamp(36px,7vw,104px);line-height:1;letter-spacing:-.025em}
+.tag em{font-weight:700;font-style:italic}
 .sub{display:block;margin-top:20px;font-size:12px;letter-spacing:.4em;text-transform:uppercase}
 .cta{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);text-decoration:none;border:1px solid var(--ink);padding:16px 26px;border-radius:999px;transition:.25s;white-space:nowrap}
 .ctas{display:flex;gap:12px;flex-wrap:wrap}
@@ -100,6 +101,7 @@ footer a:hover{border-color:var(--red)}
   </div>
   <div class="hero-in">
     <div>
+      <p class="tag" data-i="close" data-html>It’s a pleasure doing<br><em>Business</em> with you</p>
       <span class="sub" data-i="sub">Inflight Bar · Private lounge</span>
     </div>
     <div class="ctas">
@@ -187,13 +189,13 @@ const I={
  en:{top:'Inquire',sub:'Inflight Bar · Private lounge',exclusive:'Business is a private lounge: when you reserve it, no one else is there.',cta1:'Inquire for an event',cta2:'Immediate reservation',
   name:'Name',email:'Email',message:'Message',date:'Date',time:'Time',guests:'Guests',
   send1:'Send inquiry',send2:'Reserve · $500 deposit',deposit:'<b>A $500 USD deposit holds your date on the Business calendar.</b>',
-  write:'Or write to',close:'It’s a pleasure doing <em>Business</em> with you',
+  write:'Or write to',close:'It’s a pleasure doing<br><em>Business</em> with you',
   t_event:'Inquire for<br>an <b>event</b>',t_reserve:'Immediate<br><b>reservation</b>'},
  // [REVIEW] Spanish copy is a translation, not provided by the client.
  es:{top:'Consultar',sub:'Inflight Bar · Lounge privado',exclusive:'Business es un lounge privado: si lo reservas, no hay nadie más.',cta1:'Consultar por un evento',cta2:'Reservación inmediata',
   name:'Nombre',email:'Correo',message:'Mensaje',date:'Fecha',time:'Hora',guests:'Invitados',
   send1:'Enviar consulta',send2:'Reservar · depósito de $500',deposit:'<b>Un depósito de $500 USD aparta tu fecha en el calendario de Business.</b>',
-  write:'O escribe a',close:'Es un placer hacer <em>Business</em> contigo',
+  write:'O escribe a',close:'Es un placer hacer<br><em>Business</em> contigo',
   t_event:'Consulta por<br>un <b>evento</b>',t_reserve:'Reservación<br><b>inmediata</b>'}
 };
 function setLang(l){
