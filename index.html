@@ -51,10 +51,10 @@ img{display:block;max-width:100%}
 /* gallery: justified rows, no cropping */
 .gallery{padding:clamp(8px,1.2vw,16px)}
 .row{display:flex;gap:clamp(8px,1.2vw,16px);margin-bottom:clamp(8px,1.2vw,16px)}
-.row button{flex:var(--a) 1 0;min-width:0;border:0;padding:0;background:#1d0a22;cursor:zoom-in;overflow:hidden}
+.row .ph{flex:var(--a) 1 0;min-width:0;background:#1d0a22;overflow:hidden}
 .row img{width:100%;height:100%;object-fit:cover;aspect-ratio:var(--a);transition:transform .8s cubic-bezier(.2,.7,.2,1)}
-.row button:hover img{transform:scale(1.03)}
-@media(max-width:700px){.row{flex-direction:column}.row button{flex:none}}
+.row .ph:hover img{transform:scale(1.03)}
+@media(max-width:700px){.row{flex-direction:column}.row .ph{flex:none}}
 
 /* inquire — brand cover colors */
 .inquire{padding:clamp(72px,12vw,160px) clamp(20px,4vw,56px);background:var(--pink);color:var(--red)}
@@ -89,10 +89,6 @@ footer a{color:var(--ink);text-decoration:none;border-bottom:1px solid rgba(255,
 footer a:hover{border-color:var(--red)}
 
 /* lightbox */
-.lb{position:fixed;inset:0;z-index:50;background:rgba(10,3,14,.96);display:none;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
-.lb.on{display:flex}
-.lb img{max-height:94vh;max-width:96vw;object-fit:contain}
-.lb span{position:fixed;top:18px;right:24px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;opacity:.6}
 </style>
 </head>
 <body>
@@ -122,16 +118,16 @@ footer a:hover{border-color:var(--red)}
 <main>
   <section class="gallery" aria-label="Photos of Business">
     <div class="row">
-      <button style="--a:1.5" data-full="img/business_1.jpg"><img src="img/business_1.jpg" alt="Red banquette and marble table under cabin windows" loading="lazy"></button>
+      <div class="ph" style="--a:1.5"><img src="img/business_1.jpg" alt="Red banquette and marble table under cabin windows" loading="lazy"></div>
     </div>
     <div class="row">
-      <button style="--a:.667" data-full="img/business_7.jpg"><img src="img/thumb/Business_7.jpg" alt="Purple-carpeted stairs lined with orange light" loading="lazy"></button>
-      <button style="--a:1.5" data-full="img/business_4.jpg"><img src="img/thumb/Business_4.jpg" alt="Circular banquette seen from above" loading="lazy"></button>
-      <button style="--a:.667" data-full="img/business_8.jpg"><img src="img/thumb/Business_8.jpg" alt="Stairwell leading to a door with a porthole window" loading="lazy"></button>
+      <div class="ph" style="--a:.667"><img src="img/thumb/Business_7.jpg" alt="Purple-carpeted stairs lined with orange light" loading="lazy"></div>
+      <div class="ph" style="--a:1.5"><img src="img/thumb/Business_4.jpg" alt="Circular banquette seen from above" loading="lazy"></div>
+      <div class="ph" style="--a:.667"><img src="img/thumb/Business_8.jpg" alt="Stairwell leading to a door with a porthole window" loading="lazy"></div>
     </div>
     <div class="row">
-      <button style="--a:1.5" data-full="img/business_3.jpg"><img src="img/thumb/Business_3.jpg" alt="Wood-paneled lounge with velvet curtains" loading="lazy"></button>
-      <button style="--a:1.5" data-full="img/business_5.jpg"><img src="img/thumb/Business_5.jpg" alt="Two martini glasses on a marble table" loading="lazy"></button>
+      <div class="ph" style="--a:1.5"><img src="img/thumb/Business_3.jpg" alt="Wood-paneled lounge with velvet curtains" loading="lazy"></div>
+      <div class="ph" style="--a:1.5"><img src="img/thumb/Business_5.jpg" alt="Two martini glasses on a marble table" loading="lazy"></div>
     </div>
   </section>
 
@@ -191,15 +187,7 @@ footer a:hover{border-color:var(--red)}
 
 <!-- [PENDING] address, hours: not confirmed for the site, intentionally not rendered -->
 
-<div class="lb" id="lb" role="dialog" aria-label="Photo"><span>Close</span><img alt=""></div>
-
 <script>
-const lb=document.getElementById('lb'), lbi=lb.querySelector('img');
-document.querySelectorAll('[data-full]').forEach(b=>b.addEventListener('click',()=>{
-  lbi.src=b.dataset.full; lbi.alt=b.querySelector('img').alt; lb.classList.add('on');
-}));
-lb.addEventListener('click',()=>lb.classList.remove('on'));
-addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('on')});
 
 // Tabs
 let curTab='event', lang='en';
