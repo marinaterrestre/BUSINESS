@@ -1,4 +1,4 @@
-// Event inquiry: emails the inquiry to Business right away and schedules the quote email to the visitor 3 hours later (via Resend).
+// Event inquiry: emails the inquiry to Business right away and schedules the quote email to the visitor 30 minutes later (via Resend).
 // Needs RESEND_API_KEY in Vercel env vars.
 const TO = 'business@businessfirst.art';
 const FROM = 'Business <business@businessfirst.art>';
@@ -139,8 +139,8 @@ const handler = async (req, res) => {
       }</table></div>`
     });
     const c = COPY[lang];
-    // Sent 3 hours later (scheduled by Resend) so it doesn't feel automated.
-    const sendAt = new Date(Date.now() + 3 * 60 * 60 * 1000).toISOString();
+    // Sent 30 minutes later (scheduled by Resend) so it doesn't feel automated.
+    const sendAt = new Date(Date.now() + 30 * 60 * 1000).toISOString();
     await send({from: FROM, to: [d.email], reply_to: TO, subject: c.subject, html: confirmationHtml(c, d), scheduled_at: sendAt});
     return res.status(200).json({ok:true});
   } catch (e) {
