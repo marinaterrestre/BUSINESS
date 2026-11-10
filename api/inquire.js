@@ -71,12 +71,12 @@ function fmtDate(iso, locale) {
   return d.toLocaleDateString(locale, {weekday:'long', year:'numeric', month:'long', day:'numeric', timeZone:'UTC'});
 }
 
-const BG = '#14061a', RED = '#EE3725', PINK = '#FFA3A2', LINE = '#3a2142';
+const BG = '#ffffff', INK = '#14061a', RED = '#EE3725', MUTED = '#6f5d78', LINE = '#e7e0ea';
 const serif = "Georgia,'Times New Roman',serif";
 const sans = "Helvetica,Arial,sans-serif";
 
 function row(k, v, strong) {
-  return `<tr><td style="padding:12px 0;border-bottom:1px solid ${LINE};color:${PINK};font:13px ${sans};vertical-align:top;width:44%">${esc(k)}</td><td style="padding:12px 0;border-bottom:1px solid ${LINE};color:#fff;font:${strong?'700 ':''}15px ${sans};vertical-align:top;white-space:pre-wrap">${v}</td></tr>`;
+  return `<tr><td style="padding:12px 0;border-bottom:1px solid ${LINE};color:${MUTED};font:13px ${sans};vertical-align:top;width:44%">${esc(k)}</td><td style="padding:12px 0;border-bottom:1px solid ${LINE};color:${INK};font:${strong?'700 ':''}15px ${sans};vertical-align:top;white-space:pre-wrap">${v}</td></tr>`;
 }
 function h(t) {
   return `<p style="margin:36px 0 4px;color:${RED};font:700 11px ${sans};letter-spacing:.22em;text-transform:uppercase">${esc(t)}</p>`;
@@ -92,15 +92,15 @@ function confirmationHtml(c, d) {
   return `<div style="background:${BG};padding:40px 16px">
   <div style="max-width:560px;margin:0 auto">
     <p style="margin:0;color:${RED};font:italic 900 44px/1 ${serif}">Business</p>
-    <p style="margin:8px 0 32px;color:${PINK};font:11px ${sans};letter-spacing:.22em;text-transform:uppercase">Inflight Bar · ${esc(c.kicker)}</p>
-    <p style="margin:0 0 12px;color:#fff;font:700 20px ${sans}">${esc(c.hi(d.name))}</p>
-    <p style="margin:0;color:#fff;font:16px/1.6 ${sans}">${esc(c.intro(fmtDate(d.event_date, c.locale), d.number_of_people))}</p>
+    <p style="margin:8px 0 32px;color:${MUTED};font:11px ${sans};letter-spacing:.22em;text-transform:uppercase">Inflight Bar · ${esc(c.kicker)}</p>
+    <p style="margin:0 0 12px;color:${INK};font:700 20px ${sans}">${esc(c.hi(d.name))}</p>
+    <p style="margin:0;color:${INK};font:16px/1.6 ${sans}">${esc(c.intro(fmtDate(d.event_date, c.locale), d.number_of_people))}</p>
     ${h(c.ev)}<table role="presentation" width="100%" style="border-collapse:collapse;border-top:1px solid ${RED}">${ev}</table>
     ${h(c.quote)}<table role="presentation" width="100%" style="border-collapse:collapse;border-top:1px solid ${RED}">${quote}</table>
-    ${h(c.cond)}${c.condText.map(t => `<p style="margin:10px 0 0;color:#fff;font:15px/1.6 ${sans}">${esc(t)}</p>`).join('')}
-    ${h(c.pay)}<p style="margin:8px 0 0;color:#fff;font:15px/1.6 ${sans}">${esc(c.payText)}</p>
-    <p style="margin:44px 0 6px;color:#fff;font:italic 22px/1.3 ${serif}">${c.close}</p>
-    <p style="margin:0;color:${PINK};font:13px ${sans}">${esc(c.sign)}</p>
+    ${h(c.cond)}${c.condText.map(t => `<p style="margin:10px 0 0;color:${INK};font:15px/1.6 ${sans}">${esc(t)}</p>`).join('')}
+    ${h(c.pay)}<p style="margin:8px 0 0;color:${INK};font:15px/1.6 ${sans}">${esc(c.payText)}</p>
+    <p style="margin:44px 0 6px;color:${INK};font:italic 22px/1.3 ${serif}">${c.close}</p>
+    <p style="margin:0;color:${MUTED};font:13px ${sans}">${esc(c.sign)}</p>
   </div></div>`;
 }
 
