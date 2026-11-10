@@ -24,13 +24,16 @@ const COPY = {
       space:'Espacio', spaceV:'Business · lounge privado, uso exclusivo',
       hours:'Horario', hoursV:'6 PM a 2 AM',
       cap:'Aforo', capV:'Hasta 42 personas, 25 sentadas',
-      min:'Consumo mínimo', svc:'Servicio (18%)', tot:'Consumo mínimo con servicio',
-      dep:'Depósito para apartar la fecha', depNote:'Se descuenta de tu consumo el día del evento.'
+      min:'Consumo mínimo', svc:'Servicio (18%)', tot:'Consumo mínimo con servicio'
     },
-    cond: 'Condiciones',
-    condText: 'Business es un lounge privado: cuando lo reservas, no hay nadie más. Si no se alcanza el consumo mínimo, Business conserva el depósito.',
-    pay: 'Formas de pago',
-    payText: 'Te enviaremos el enlace para pagar el depósito de ' + mxn(DEPOSIT) + ' y apartar tu fecha.',
+    cond: 'Nuestras políticas',
+    condText: [
+      'Business es un lounge privado: cuando lo reservas, no hay nadie más.',
+      'Para apartar la fecha se requiere un depósito de ' + mxn(DEPOSIT) + '. Se descuenta de tu consumo el día del evento.',
+      'Si no se alcanza el consumo mínimo, Business conserva el depósito.'
+    ],
+    pay: 'Para apartar tu fecha',
+    payText: 'Te enviaremos el enlace para pagar el depósito de ' + mxn(DEPOSIT) + '.',
     close: 'Es un placer hacer <i>Business</i> contigo.',
     sign: 'Business · Inflight Bar'
   },
@@ -47,13 +50,16 @@ const COPY = {
       space:'Space', spaceV:'Business · private lounge, exclusive use',
       hours:'Hours', hoursV:'6 PM to 2 AM',
       cap:'Capacity', capV:'Up to 42 people, 25 seated',
-      min:'Minimum spend', svc:'Service (18%)', tot:'Minimum spend with service',
-      dep:'Deposit to hold the date', depNote:'Applied to your tab on the night of the event.'
+      min:'Minimum spend', svc:'Service (18%)', tot:'Minimum spend with service'
     },
-    cond: 'Terms',
-    condText: 'Business is a private lounge: when you reserve it, no one else is there. If the minimum spend is not reached, Business keeps the deposit.',
-    pay: 'Payment',
-    payText: 'We will send you the link to pay the ' + mxn(DEPOSIT) + ' deposit and hold your date.',
+    cond: 'Our policies',
+    condText: [
+      'Business is a private lounge: when you reserve it, no one else is there.',
+      'A ' + mxn(DEPOSIT) + ' deposit is required to hold the date. It is applied to your tab on the night of the event.',
+      'If the minimum spend is not reached, Business keeps the deposit.'
+    ],
+    pay: 'To hold your date',
+    payText: 'We will send you the link to pay the ' + mxn(DEPOSIT) + ' deposit.',
     close: 'It’s a pleasure doing <i>Business</i> with you.',
     sign: 'Business · Inflight Bar'
   }
@@ -82,8 +88,7 @@ function confirmationHtml(c, d) {
   const q = c.q;
   const quote =
     row(q.space, esc(q.spaceV)) + row(q.hours, esc(q.hoursV)) + row(q.cap, esc(q.capV)) +
-    row(q.min, esc(mxn(MIN_SPEND))) + row(q.svc, esc(mxn(svc))) + row(q.tot, esc(mxn(MIN_SPEND + svc)), true) +
-    row(q.dep, `<b>${esc(mxn(DEPOSIT))}</b><br><span style="color:${PINK};font-size:13px">${esc(q.depNote)}</span>`);
+    row(q.min, esc(mxn(MIN_SPEND))) + row(q.svc, esc(mxn(svc))) + row(q.tot, esc(mxn(MIN_SPEND + svc)), true);
   return `<div style="background:${BG};padding:40px 16px">
   <div style="max-width:560px;margin:0 auto">
     <p style="margin:0;color:${RED};font:italic 900 44px/1 ${serif}">Business</p>
@@ -92,7 +97,7 @@ function confirmationHtml(c, d) {
     <p style="margin:0;color:#fff;font:16px/1.6 ${sans}">${esc(c.intro(fmtDate(d.event_date, c.locale), d.number_of_people))}</p>
     ${h(c.ev)}<table role="presentation" width="100%" style="border-collapse:collapse;border-top:1px solid ${RED}">${ev}</table>
     ${h(c.quote)}<table role="presentation" width="100%" style="border-collapse:collapse;border-top:1px solid ${RED}">${quote}</table>
-    ${h(c.cond)}<p style="margin:8px 0 0;color:#fff;font:15px/1.6 ${sans}">${esc(c.condText)}</p>
+    ${h(c.cond)}${c.condText.map(t => `<p style="margin:10px 0 0;color:#fff;font:15px/1.6 ${sans}">${esc(t)}</p>`).join('')}
     ${h(c.pay)}<p style="margin:8px 0 0;color:#fff;font:15px/1.6 ${sans}">${esc(c.payText)}</p>
     <p style="margin:44px 0 6px;color:#fff;font:italic 22px/1.3 ${serif}">${c.close}</p>
     <p style="margin:0;color:${PINK};font:13px ${sans}">${esc(c.sign)}</p>
