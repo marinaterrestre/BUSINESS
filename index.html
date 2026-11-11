@@ -173,7 +173,8 @@ footer a:hover{border-color:var(--red)}
           <p class="note" data-i="hours">Events run from 6 PM to 2 AM.</p>
           <p class="note" data-i="exclusive">Business is a private lounge: when you reserve it, no one else is there.</p>
           <p class="note" data-i="deposit" data-html><b>A $10,000 MXN deposit holds your date on the Business calendar.</b></p>
-          <!-- [PENDING] what the $10,000 deposit includes and the cancellation policy: not defined yet, intentionally not rendered. -->
+          <p class="note" data-i="depositdeduct">The deposit is deducted from your tab on the day of your event.</p>
+          <p class="note" data-i="cancel">You can cancel up to 24 hours before the event and we will refund your deposit.</p>
           <!-- [PENDING] payment (deposit) and live calendar availability are not connected yet; this form currently sends the request by email. -->
           <button class="send" type="submit" data-i="send2">Reserve · $10,000 MXN deposit</button>
         </form>
@@ -197,6 +198,7 @@ footer a:hover{border-color:var(--red)}
 let curTab='event', lang='en';
 const I={
  en:{top:'Inquire',sub:'Inflight Bar · Private lounge',exclusive:'Business is a private lounge: when you reserve it, no one else is there.',cta1:'Inquire for an event',cta2:'Immediate reservation',
+  depositdeduct:'The deposit is deducted from your tab on the day of your event.',cancel:'You can cancel up to 24 hours before the event and we will refund your deposit.',
   phone:'Phone',dayrule:'Available Wednesday to Saturday only. Please pick one of those days.',
   hours:'Events run from 6 PM to 2 AM.',name:'Name',booking:'Booking under the name of',eventdate:'Event date',people:'Number of people',email:'Email',message:'Message',date:'Date',time:'Time',guests:'Guests',
   send1:'Send inquiry',capacity:'Capacity: up to 42 people, 25 seated.',sending:'Sending…',sent:'Thank you. We received your inquiry and will write to you at your email.',err:'Something went wrong. Please try again or write to business@businessfirst.art.',send2:'Reserve · $10,000 MXN deposit',deposit:'<b>A $10,000 MXN deposit holds your date on the Business calendar.</b>',
@@ -204,6 +206,7 @@ const I={
   t_event:'Inquire for<br>an <b>event</b>',t_reserve:'Immediate<br><b>reservation</b>'},
  // [REVIEW] Spanish copy is a translation, not provided by the client.
  es:{top:'Consultar',sub:'Inflight Bar · Lounge privado',exclusive:'Business es un lounge privado: si lo reservas, no hay nadie más.',cta1:'Consultar por un evento',cta2:'Reservación inmediata',
+  depositdeduct:'El depósito se descuenta de tu consumo el día de tu evento.',cancel:'Puedes cancelar hasta 24 horas antes del evento y te regresamos tu depósito.',
   phone:'Teléfono',dayrule:'Solo hay fechas de miércoles a sábado. Elige uno de esos días.',
   hours:'Los eventos son de 6 PM a 2 AM.',name:'Nombre',booking:'A nombre de',eventdate:'Fecha del evento',people:'Número de personas',email:'Correo',message:'Mensaje',date:'Fecha',time:'Hora',guests:'Invitados',
   send1:'Enviar consulta',capacity:'Capacidad: hasta 42 personas, 25 sentadas.',sending:'Enviando…',sent:'Gracias. Recibimos tu consulta y te escribiremos a tu correo.',err:'Algo salió mal. Inténtalo de nuevo o escribe a business@businessfirst.art.',send2:'Reservar · depósito de $10,000 MXN',deposit:'<b>Un depósito de $10,000 MXN aparta tu fecha en el calendario de Business.</b>',
