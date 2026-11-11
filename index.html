@@ -145,11 +145,13 @@ footer a:hover{border-color:var(--red)}
         <form id="event" data-kind="Event inquiry">
           <label><span data-i="name">Name</span><input name="name" required autocomplete="name"></label>
           <label><span data-i="email">Email</span><input name="email" type="email" required autocomplete="email"></label>
+          <label><span data-i="phone">Phone</span><input name="phone" type="tel" required autocomplete="tel" minlength="7"></label>
           <label><span data-i="booking">Booking under the name of</span><input name="booking_name" required></label>
           <div class="two">
             <label><span data-i="eventdate">Event date</span><input name="event_date" type="date" required></label>
             <label><span data-i="people">Number of people</span><input name="number_of_people" type="number" min="1" max="42" required></label>
           </div>
+          <!-- [PENDING] 1-2 basic event examples to orient the visitor: content not provided yet, intentionally not rendered. -->
           <label><span data-i="message">Message</span><textarea name="message" required></textarea></label>
           <p class="note" data-i="hours">Events run from 6 PM to 2 AM.</p>
           <p class="note" data-i="capacity">Capacity: up to 42 people, 25 seated.</p>
@@ -162,6 +164,7 @@ footer a:hover{border-color:var(--red)}
         <form id="reserve" data-kind="Immediate reservation" hidden>
           <label><span data-i="name">Name</span><input name="name" required autocomplete="name"></label>
           <label><span data-i="email">Email</span><input name="email" type="email" required autocomplete="email"></label>
+          <label><span data-i="phone">Phone</span><input name="phone" type="tel" required autocomplete="tel" minlength="7"></label>
           <div class="two three">
             <label><span data-i="date">Date</span><input name="date" type="date" required></label>
             <label><span data-i="time">Time</span><select name="time" required><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option><option value="23:00">23:00</option><option value="00:00">00:00</option><option value="01:00">01:00</option><option value="02:00">02:00</option></select></label>
@@ -170,6 +173,7 @@ footer a:hover{border-color:var(--red)}
           <p class="note" data-i="hours">Events run from 6 PM to 2 AM.</p>
           <p class="note" data-i="exclusive">Business is a private lounge: when you reserve it, no one else is there.</p>
           <p class="note" data-i="deposit" data-html><b>A $10,000 MXN deposit holds your date on the Business calendar.</b></p>
+          <!-- [PENDING] what the $10,000 deposit includes and the cancellation policy: not defined yet, intentionally not rendered. -->
           <!-- [PENDING] payment (deposit) and live calendar availability are not connected yet; this form currently sends the request by email. -->
           <button class="send" type="submit" data-i="send2">Reserve · $10,000 MXN deposit</button>
         </form>
@@ -193,12 +197,14 @@ footer a:hover{border-color:var(--red)}
 let curTab='event', lang='en';
 const I={
  en:{top:'Inquire',sub:'Inflight Bar · Private lounge',exclusive:'Business is a private lounge: when you reserve it, no one else is there.',cta1:'Inquire for an event',cta2:'Immediate reservation',
+  phone:'Phone',dayrule:'Available Wednesday to Saturday only. Please pick one of those days.',
   hours:'Events run from 6 PM to 2 AM.',name:'Name',booking:'Booking under the name of',eventdate:'Event date',people:'Number of people',email:'Email',message:'Message',date:'Date',time:'Time',guests:'Guests',
   send1:'Send inquiry',capacity:'Capacity: up to 42 people, 25 seated.',sending:'Sending…',sent:'Thank you. We received your inquiry and will write to you at your email.',err:'Something went wrong. Please try again or write to business@businessfirst.art.',send2:'Reserve · $10,000 MXN deposit',deposit:'<b>A $10,000 MXN deposit holds your date on the Business calendar.</b>',
   write:'Or write to',close:'It’s a pleasure doing<br><em>Business</em> with you',
   t_event:'Inquire for<br>an <b>event</b>',t_reserve:'Immediate<br><b>reservation</b>'},
  // [REVIEW] Spanish copy is a translation, not provided by the client.
  es:{top:'Consultar',sub:'Inflight Bar · Lounge privado',exclusive:'Business es un lounge privado: si lo reservas, no hay nadie más.',cta1:'Consultar por un evento',cta2:'Reservación inmediata',
+  phone:'Teléfono',dayrule:'Solo hay fechas de miércoles a sábado. Elige uno de esos días.',
   hours:'Los eventos son de 6 PM a 2 AM.',name:'Nombre',booking:'A nombre de',eventdate:'Fecha del evento',people:'Número de personas',email:'Correo',message:'Mensaje',date:'Fecha',time:'Hora',guests:'Invitados',
   send1:'Enviar consulta',capacity:'Capacidad: hasta 42 personas, 25 sentadas.',sending:'Enviando…',sent:'Gracias. Recibimos tu consulta y te escribiremos a tu correo.',err:'Algo salió mal. Inténtalo de nuevo o escribe a business@businessfirst.art.',send2:'Reservar · depósito de $10,000 MXN',deposit:'<b>Un depósito de $10,000 MXN aparta tu fecha en el calendario de Business.</b>',
   write:'O escribe a',close:'Es un placer hacer<br><em>Business</em> contigo',
@@ -224,7 +230,18 @@ document.querySelectorAll('[data-tab]').forEach(el=>el.addEventListener('click',
 let saved=null; try{saved=localStorage.getItem('lang')}catch(e){}
 setLang(saved||((navigator.language||'en').toLowerCase().startsWith('es')?'es':'en'));
 
-// Event inquiry: sent from the page (emails Business + automatic confirmation to the visitor).
+// Calendar: only Wednesday to Saturday dates are open, and never in the past.
+// Native date pickers can't grey out weekdays, so an invalid day is flagged on pick and blocks submit.
+const todayISO=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);
+function openDay(v){ if(!v) return true; const w=new Date(v+'T00:00:00Z').getUTCDay(); return w>=3&&w<=6; } // 3=Wed ... 6=Sat
+document.querySelectorAll('input[name=event_date],input[name=date]').forEach(inp=>{
+  inp.min=todayISO;
+  const check=()=>{ inp.setCustomValidity(openDay(inp.value)?'':I[lang].dayrule); if(!openDay(inp.value)) inp.reportValidity(); };
+  inp.addEventListener('change',check);
+  inp.addEventListener('input',()=>inp.setCustomValidity(''));
+});
+
+// Event inquiry: sent from the page (emails Business + automatic thank-you email to the visitor).
 const evForm=document.getElementById('event');
 evForm.addEventListener('submit',async e=>{
   e.preventDefault();
